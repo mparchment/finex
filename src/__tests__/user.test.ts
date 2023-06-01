@@ -58,7 +58,10 @@ describe('User Endpoints', () => {
     expect(response.body.user).toBeDefined();
     expect(response.body.user.name).toBe(newUser.name);
     expect(response.body.user.email).toBe(newUser.email);
-    // Add assertions for other fields
+    expect(response.body.user.role).toBe(newUser.role);
+    expect(response.body.user.address).toBe(newUser.address);
+    expect(response.body.user.phone).toBe(newUser.phone);
+    expect(new Date(response.body.user.dob)).toEqual(newUser.dob);
 
     // Save the created user for further testing
     createdUser = response.body.user;
@@ -72,7 +75,10 @@ describe('User Endpoints', () => {
     expect(response.body.user).toBeDefined();
     expect(response.body.user.name).toBe(createdUser.name);
     expect(response.body.user.email).toBe(createdUser.email);
-    // Add assertions for other fields
+    expect(response.body.user.role).toBe(createdUser.role);
+    expect(response.body.user.address).toBe(createdUser.address);
+    expect(response.body.user.phone).toBe(createdUser.phone);
+    expect(new Date(response.body.user.dob)).toEqual(createdUser.dob);
   });
 
   it('should update a user', async () => {
@@ -94,7 +100,10 @@ describe('User Endpoints', () => {
     expect(response.body.user).toBeDefined();
     expect(response.body.user.name).toBe(updatedUser.name);
     expect(response.body.user.email).toBe(updatedUser.email);
-    // Add assertions for other fields
+    expect(response.body.user.role).toBe(updatedUser.role);
+    expect(response.body.user.address).toBe(updatedUser.address);
+    expect(response.body.user.phone).toBe(updatedUser.phone);
+    expect(new Date(response.body.user.dob)).toEqual(updatedUser.dob);
   });
 
   it('should delete a user', async () => {
