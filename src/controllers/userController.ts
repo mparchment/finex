@@ -38,10 +38,10 @@ export const getUserById = async (req: Request, res: Response) => {
 export const createUser = async (req: Request, res: Response) => {
   try {
     // Extract the user data from the request body
-    const { name, email, password } = req.body;
+    const { name, email, password, address, phone, dob } = req.body;
 
     // Create a new user in the database with the provided data
-    const user = await User.create({ name, email, password });
+    const user = await User.create({ name, email, password, address, phone, dob });
 
     // Return the response with status 201 and the created user
     res.status(201).json({ user });
@@ -57,10 +57,14 @@ export const updateUser = async (req: Request, res: Response) => {
     const { userId } = req.params;
 
     // Extract the user data from the request body
-    const { name, email, password } = req.body;
+    const { name, email, password, address, phone, dob } = req.body;
 
     // Update the user in the database with the provided data
-    const user = await User.findByIdAndUpdate(userId, { name, email, password }, { new: true });
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { name, email, password, address, phone, dob },
+      { new: true }
+    );
 
     if (!user) {
       // If the user is not found, return a 404 error
