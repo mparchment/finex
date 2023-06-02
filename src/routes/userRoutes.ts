@@ -10,11 +10,11 @@ const router = express.Router();
 
 // These routes map the HTTP methods (GET, POST, PUT, DELETE) to the corresponding controller functions, which will handle the logic and interact with the database.
 
-router.get('/users', userController.getAllUsers); // Get all users [READ]
+router.get('/users', userController.getAllUsersHandler); // Get all users [READ]
 
-router.post('/users', userController.createUser); // Create a new user [CREATE]
-router.get('/users/:id', userController.getUserById); // Get a single user by their id [READ]
-router.put('/users/:id', userController.updateUser); // Update a user by their id [UPDATE]
-router.delete('/users/:id', userController.deleteUser); // Delete a user by their id [DELETE]
+router.post('/users', userController.createUserHandler); // Create a new user [CREATE]
+router.get('/users/:id', userController.getUserHandler); // Get a single user by their id [READ]
+router.put('/users/:id', userController.updateUserHandler); // Update a user by their id [UPDATE]
+router.delete('/users/:id', userController.deleteUserHandler); // Delete a user by their id [DELETE]
 
 export default router;

@@ -5,8 +5,7 @@
   "main": "src/server.ts",
   "scripts": {
     "start": "ts-node-dev --respawn --transpile-only src/start.ts",
-    "build": "tsc",
-    "test": "jest"
+    "build": "tsc"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -38,6 +37,7 @@
     "@types/node": "^20.2.5",
     "@types/pino": "^7.0.5",
     "@types/supertest": "^2.0.12",
+    "cross-env": "^7.0.3",
     "jest": "^27.4.7",
     "nodemon": "^2.0.15",
     "ts-jest": "^27.1.3",
