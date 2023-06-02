@@ -7,17 +7,12 @@ describe('User Endpoints', () => {
   let createdUser: IUser;
 
   beforeAll(async () => {
-    // Connect to the test database or set up a test database
-    // before running the tests
     // ...
   });
 
   afterAll(async () => {
-    // Clean up the test database or close the database connection
-    // after running the tests
-    // Close the mongoose connection
+    // Close the database connection after running the tests.
     await mongoose.connection.close();
-    // ...
   });
 
   beforeEach(async () => {
