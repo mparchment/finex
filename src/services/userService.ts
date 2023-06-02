@@ -1,9 +1,12 @@
 import UserModel, { IUser } from '../models/userModel';
+import { omit } from 'lodash';
 import { Request } from 'express';
+import User from '../models/userModel';
 
 export async function createUser(input: IUser) {
     try {
-        return await UserModel.create(input);
+        const user = await UserModel.create(input);
+        return omit(user.toJSON(), 'password')
     } catch (e: any) {
         throw new Error(e);
     }
@@ -55,4 +58,18 @@ export async function deleteUser(req: Request) {
     } catch (e: any) {
         throw new Error(e);
     }
+}
+
+export async function validatePassword({email, password}:{email: string, password: string}){
+    const user = await UserModel.findOne({ email });
+
+    if(!user){
+        return false;
+    }
+
+    const isValid = await user.comparePassword(password);
+
+    if(!isValid){ return false; }
+
+    return omit(user.toJSON(), 'password')
 }
