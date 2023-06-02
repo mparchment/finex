@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import userRoutes from './routes/userRoutes';
+import sessionRoutes from './routes/sessionRoutes';
 import dotenv from 'dotenv';
 import connect from './utils/connect';
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', userRoutes);
+app.use('/api', sessionRoutes);
 // app.use('/api', transactionRoutes);
 // app.use('/api', accountRoutes);
 
