@@ -11,6 +11,9 @@ export default function Root() {
               <a href={`/accounts`}>Accounts</a>
             </li>
             <li>
+              <a href={`/`}>Planning</a>
+            </li>
+            <li>
               <a href={`/`}>Transfer</a>
             </li>
             <li>
