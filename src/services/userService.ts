@@ -1,7 +1,6 @@
 import UserModel, { IUser } from '../models/userModel';
 import { omit } from 'lodash';
 import { Request } from 'express';
-import User from '../models/userModel';
 
 export async function createUser(input: IUser) {
     try {

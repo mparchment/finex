@@ -17,4 +17,5 @@ router.get('/users/:id', userController.getUserHandler); // Get a single user by
 router.put('/users/:id', userController.updateUserHandler); // Update a user by their id [UPDATE]
 router.delete('/users/:id', userController.deleteUserHandler); // Delete a user by their id [DELETE]
 
+router.post('/users/login', userController.loginUserHandler); // Login a user
 export default router;
