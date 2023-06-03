@@ -22,7 +22,7 @@ export async function createUserSessionHandler(req: Request, res: Response){
     // iv. Create refresh token
     const refreshToken = signJWT(
         {...user, session: (await session)._id},
-        {expiresIn: process.env.REFRESH_TOKEN_TTL} // Access token time to live (TTL) is 15 minutes.
+        {expiresIn: process.env.REFRESH_TOKEN_TTL}
     );
 
 
