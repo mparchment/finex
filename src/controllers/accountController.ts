@@ -1,52 +1,75 @@
 import { Request, Response } from 'express';
-import Account from '../models/accountModel';
+import logger from '../utils/logger';
+import { createAccount, getAllAccounts, getAccount, updateAccount, deleteAccount } from '../services/accountService';
 
-export const getAllAccounts = async (req: Request, res: Response) => {
+export const createAccountHandler = async (req: Request, res: Response) => {
   try {
-    // Fetch all accounts from the database
-    const accounts = await Account.find();
-
-    // Return the response with status 200 and the accounts data
-    res.status(200).json({ accounts });
-  } catch (error) {
-    // Handle any errors that occur during the process
-    res.status(500).json({ error: 'Failed to fetch accounts' });
+    const account = await createAccount(req.body); 
+    res.status(201).json({ account }); 
+  } catch (e: any) {
+    logger.error(e);
+    return res.status(409).json({ e: 'Account already exists' });
   }
 };
 
-export const getAccountById = async (req: Request, res: Response) => {
+export const getAllAccountsHandler = async (req: Request, res: Response) => {
   try {
-    // Extract the accountId from the request parameters
-    const { accountId } = req.params;
+    const accounts = await getAllAccounts();
+    res.status(200).json({ accounts });
+  } catch (e: any) {
+    logger.error(e);
+    res.status(500).json({ e: 'Failed to fetch accounts' });
+  }
+};
 
-    // Fetch the account from the database based on the accountId
-    const account = await Account.findById(accountId);
+export const getAccountHandler = async (req: Request, res: Response) => {
+  try {
+    const account = await getAccount(req);
 
     if (!account) {
-      // If the account is not found, return a 404 error
-      res.status(404).json({ error: 'Account not found' });
-    } else {
-      // Return the response with status 200 and the account data
-      res.status(200).json({ account });
+      return res.status(404).json({ e: 'Account not found' });
     }
-  } catch (error) {
-    // Handle any errors that occur during the process
-    res.status(500).json({ error: 'Failed to fetch account' });
+    res.status(200).json({ account });
+  } catch (e: any) {
+    logger.error(e);
+    res.status(500).json({ e: 'Failed to fetch account' });
   }
 };
 
-export const createAccount = async (req: Request, res: Response) => {
+export const updateAccountHandler = async (req: Request, res: Response) => {
   try {
-    // Extract the account data from the request body
-    const { userId, accountNumber, balance } = req.body;
+    const account = await updateAccount(req);
 
-    // Create a new account in the database with the provided data
-    const account = await Account.create({ userId, accountNumber, balance });
+    if (!account) {
+      return res.status(404).json({ e: 'Account not found' });
+    }
+    res.status(200).json({ account });
+  } catch (e: any) {
+    logger.error(e);
+    res.status(500).json({ e: 'Failed to update account' });
+  }
+};
 
-    // Return the response with status 201 and the created account
-    res.status(201).json({ account });
-  } catch (error) {
-    // Handle any errors that occur during the process
-    res.status(500).json({ error: 'Failed to create account' });
+export const deleteAccountHandler = async (req: Request, res: Response) => {
+  try {
+    const deletedAccount = await deleteAccount(req);
+
+    if (!deletedAccount) {
+      return res.status(404).json({ e: 'Account not found' });
+    }
+    res.status(200).json({ message: 'Account deleted successfully' });
+  } catch (e: any) {
+    logger.error(e);
+    res.status(500).json({ e: 'Failed to delete account' });
+  }
+};
+
+export const getAccountsByUserHandler = async (req: Request, res: Response) => {
+  try {
+    const accounts = await getAllAccounts(req.params.userId);
+    res.status(200).json({ accounts });
+  } catch (e: any) {
+    logger.error(e);
+    res.status(500).json({ e: 'Failed to fetch accounts' });
   }
 };

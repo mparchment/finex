@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-interface IAccount extends Document {
+export interface IAccount extends Document {
   userId: string;
   accountNumber: string;
   accountName: string;
