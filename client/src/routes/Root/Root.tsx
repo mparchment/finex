@@ -8,22 +8,22 @@ export default function Root() {
         <nav>
           <ul>
             <li>
-              <a href={`/accounts`}>Accounts</a>
+              <a href={`/portal/accounts`}>Accounts</a>
             </li>
             <li>
-              <a href={`/`}>Planning</a>
+              <a href={`/portal/planning`}>Planning</a>
             </li>
             <li>
-              <a href={`/`}>Transfer</a>
+              <a href={`/portal/transfer`}>Transfer</a>
             </li>
             <li>
-              <a href={`/`}>Billing</a>
+              <a href={`/portal/billing`}>Billing</a>
             </li>
             <li>
-              <a href={`/`}>Profile</a>
+              <a href={`/portal/profile`}>Profile</a>
             </li>
             <li>
-              <a href={`/`}>Settings</a>
+              <a href={`/portal/settings`}>Settings</a>
             </li>
           </ul>
         </nav>
