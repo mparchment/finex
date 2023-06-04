@@ -16,10 +16,3 @@ export const RightPanel = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
-export const SignInForm = styled.form`
-  max-width: 300px;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 5px;
-`;
