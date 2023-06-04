@@ -1,34 +1,35 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { SignInContainer, LeftPanel, RightPanel, SignInForm } from './SignInStyles';
+import UserContext from '../../contexts/userContext';
 
 const SignIn = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const userContext = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
+
     try {
       const response = await axios.post('http://localhost:5000/api/users/login', {
         email,
         password,
       });
-
-      // Assuming the login was successful and you received a response with a success status code (e.g., 200)
+    
       if (response.status === 200) {
-        // Perform any necessary actions upon successful login
+        localStorage.setItem('token', response.data.token); // updated this line
+        userContext?.setUser(response.data.user); // updated this line
         navigate('/portal');
       } else {
-        // Handle unsuccessful login, e.g., show an error message
         console.log('Login failed');
       }
     } catch (error) {
-      // Handle error, e.g., show an error message
       console.error('An error occurred', error);
-    }
+    }    
+    
   };
 
   return (

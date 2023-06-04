@@ -2,22 +2,39 @@ import { Request, Response } from 'express';
 import logger from '../utils/logger';
 import { createUser, getAllUsers, getUser, updateUser, deleteUser } from '../services/userService';
 import { validatePassword } from '../services/userService';
+import jwt from 'jsonwebtoken';
+import { log } from 'console';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export const loginUserHandler = async (req: Request, res: Response) => {
   const { email, password } = req.body;
+
   try {
     const user = await validatePassword({ email, password });
+
     if (user) {
-      // Authentication successful
-      res.status(200).json({ message: 'Login successful', user });
+      const userResponse = {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        address: user.address,
+        phone: user.phone,
+        dob: user.dob,
+      };
+      
+      const token = jwt.sign({ _id: user._id }, process.env.PRIVATE_KEY!, { algorithm: 'RS256', expiresIn: '30m' });
+
+      res.status(200).json({ message: 'Login successful', user: userResponse, token });
     } else {
-      // Authentication failed
       res.status(401).json({ message: 'Authentication failed' });
     }
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
   }
-}
+};
 
 export const getAllUsersHandler = async (req: Request, res: Response) => {
   try {

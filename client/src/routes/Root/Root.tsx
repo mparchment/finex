@@ -1,29 +1,41 @@
 import { Outlet } from "react-router-dom";
+import { useContext } from 'react';
+import UserContext from '../../contexts/userContext';
+import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export default function Root() {
+  const userContext = useContext(UserContext);
+  const navigate = useNavigate();
+
+  if(!userContext?.user) {
+    navigate('/');
+  }
+
   return (
     <>
       <div id="sidebar">
         <h1>Finex</h1>
+        <h2>Welcome, {userContext?.user?.name}</h2>
         <nav>
           <ul>
             <li>
-              <a href={`/portal/accounts`}>Accounts</a>
+              <Link to="/portal/accounts">Accounts</Link>
             </li>
             <li>
-              <a href={`/portal/planning`}>Planning</a>
+              <Link to="/portal/planning">Planning</Link>
             </li>
             <li>
-              <a href={`/portal/transfer`}>Transfer</a>
+              <Link to="/portal/transfer">Transfer</Link>
             </li>
             <li>
-              <a href={`/portal/billing`}>Billing</a>
+              <Link to="/portal/billing">Billing</Link>
             </li>
             <li>
-              <a href={`/portal/profile`}>Profile</a>
+              <Link to="/portal/profile">Profile</Link>
             </li>
             <li>
-              <a href={`/portal/settings`}>Settings</a>
+              <Link to="/portal/settings">Settings</Link>
             </li>
           </ul>
         </nav>
