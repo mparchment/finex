@@ -18,4 +18,5 @@ router.put('/users/:id', userController.updateUserHandler); // Update a user by 
 router.delete('/users/:id', userController.deleteUserHandler); // Delete a user by their id [DELETE]
 
 router.post('/users/login', userController.loginUserHandler); // Login a user
+
 export default router;
