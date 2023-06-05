@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import UserContext from '../../contexts/userContext';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import { Container, Sidebar, Detail } from './RootStyles'
+import { Container, Sidebar, Detail } from './Root.styles'
 
 export default function Root() {
   const userContext = useContext(UserContext);

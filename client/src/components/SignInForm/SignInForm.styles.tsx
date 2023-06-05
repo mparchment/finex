@@ -4,6 +4,7 @@ export const SignInFormBox = styled.form`
   position: relative;
   width: 500px;
   padding: 60px;
+  padding-bottom: 40px;
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -68,4 +69,46 @@ export const LogoContainer = styled.div`
   transform: translate(750%, -525%);
   font-variant: small-caps;
   user-select: none;
+`;
+
+export const SignUpButton = styled.button`
+  color: #999;
+  font-size: 14px;
+  text-decoration: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    color: #555;
+  }
+`;
+
+export const SignUpFields = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  div {
+    width: 100%;
+    margin-bottom: 25px;
+  }
+
+  div:nth-child(1),
+  div:nth-child(2) {
+    width: calc(50% - 8px);
+  }
+
+  div:nth-child(3) {
+    width: 100%;
+  }
+
+  /* Add this code to move Password and Confirm Password to the same row */
+  div:nth-child(4),
+  div:nth-child(5) {
+    display: flex;
+    flex-direction: column; /* Add this line to move labels above input fields */
+    justify-content: space-between;
+    width: calc(50% - 8px);
+  }
 `;
