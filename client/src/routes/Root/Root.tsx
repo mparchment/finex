@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import UserContext from '../../contexts/userContext';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { Container, Sidebar, Detail } from './RootStyles'
 
 export default function Root() {
   const userContext = useContext(UserContext);
@@ -13,10 +14,9 @@ export default function Root() {
   }
 
   return (
-    <>
-      <div id="sidebar">
+    <Container>
+      <Sidebar>
         <h1>Finex</h1>
-        <h2>Welcome, {userContext?.user?.name}</h2>
         <nav>
           <ul>
             <li>
@@ -39,10 +39,10 @@ export default function Root() {
             </li>
           </ul>
         </nav>
-      </div>
-      <div id="detail">
+      </Sidebar>
+      <Detail>
         <Outlet />
-      </div>
-    </>
+      </Detail>
+    </Container>
   );
 }

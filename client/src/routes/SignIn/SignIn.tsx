@@ -1,4 +1,4 @@
-import { SignInContainer, LeftPanel, RightPanel } from './SignIn.styles.tsx';
+import { SignInContainer, LeftPanel, RightPanel } from './SignInStyles.tsx';
 import SignInForm from '../../components/SignInForm/SignInForm.tsx';
 
 const SignIn = () => {

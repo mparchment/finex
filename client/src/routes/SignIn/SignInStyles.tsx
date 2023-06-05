@@ -16,3 +16,4 @@ export const RightPanel = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
