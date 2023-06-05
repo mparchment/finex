@@ -1,13 +1,12 @@
-import { useContext } from 'react';
-import { Navigate } from 'react-router-dom';
-import UserContext from '../contexts/userContext';
+import useProtectedRoute from '../hooks/useProtectedRoute';
 
 const withAuth = (Component: React.ComponentType<any>): React.ComponentType<any> => {
   const AuthenticatedComponent = (props: any) => {
-    const userContext = useContext(UserContext);
+    const { isLoading } = useProtectedRoute();
 
-    if (!userContext?.user) {
-      return <Navigate to="/" />;
+    if (isLoading) {
+      // Show loading spinner, return null, or any loading state you want to show
+      return null;
     }
 
     return <Component {...props} />;

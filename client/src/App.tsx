@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import UserContext, { IUser, IUserState } from './contexts/userContext';
+import UserContext, { IUser } from './contexts/userContext';
 import SignIn from './routes/SignIn/SignIn';
 import Root from './routes/Root/Root.tsx';
 import ErrorPage from './routes/ErrorPage/ErrorPage.tsx';
@@ -56,14 +56,31 @@ const router = createBrowserRouter([
     },
   ]);
 
-const App = () => {
+  const App = () => {
     const [user, setUser] = useState<IUser | null>(null);
-
-  return (
-    <UserContext.Provider value={{ user, setUser }}>
-        <RouterProvider router={router} />
-    </UserContext.Provider>
-  );
-};
-
-export default App;
+  
+    // Load any persisted user from localStorage when the component mounts
+    useEffect(() => {
+      const persistedUser = localStorage.getItem('user');
+      if (persistedUser) {
+        setUser(JSON.parse(persistedUser));
+      }
+    }, []);
+  
+    // Whenever the user state changes, persist it to localStorage
+    useEffect(() => {
+      if (user) {
+        localStorage.setItem('user', JSON.stringify(user));
+      } else {
+        localStorage.removeItem('user');
+      }
+    }, [user]);
+  
+    return (
+      <UserContext.Provider value={{ user, setUser }}>
+          <RouterProvider router={router} />
+      </UserContext.Provider>
+    );
+  };
+  
+  export default App;

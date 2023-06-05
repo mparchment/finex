@@ -4,7 +4,8 @@
   "description": "Your project description",
   "main": "src/server.ts",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only src/start.ts",
+    "server": "ts-node-dev --respawn --transpile-only src/start.ts",
+    "client": "cd client && npm run dev",
     "build": "tsc"
   },
   "dependencies": {
