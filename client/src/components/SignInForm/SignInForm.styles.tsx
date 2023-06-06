@@ -86,29 +86,48 @@ export const SignUpButton = styled.button`
 
 export const SignUpFields = styled.div`
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
 
-  div {
-    width: 100%;
-    margin-bottom: 25px;
+  & > div {
+    box-sizing: border-box;
+    margin-bottom: 20px;
+
+    & label {
+      display: block;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    & input {
+      width: calc(100% - 36px);
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      transition: border-color 0.3s ease;
+
+      &:focus {
+        outline: none;
+        border-color: dodgerblue;
+      }
+    }
   }
 
-  div:nth-child(1),
-  div:nth-child(2) {
-    width: calc(50% - 8px);
+  & > div:nth-last-child(-n+2) {
+    margin-bottom: 0; 
   }
+`;
 
-  div:nth-child(3) {
-    width: 100%;
-  }
+export const HalfWidth = styled.div`
+  width: 48%;
+`;
 
-  /* Add this code to move Password and Confirm Password to the same row */
-  div:nth-child(4),
-  div:nth-child(5) {
-    display: flex;
-    flex-direction: column; /* Add this line to move labels above input fields */
-    justify-content: space-between;
-    width: calc(50% - 8px);
-  }
+export const TwoThirdsWidth = styled.div`
+  width: 65%;
+`;
+
+export const OneThirdWidth = styled.div`
+  width: 32%;
 `;
