@@ -50,19 +50,6 @@ const Sidebar = styled.div`
     position: relative;
   }
 
-  > div form input[type="search"] {
-    width: 100%;
-    padding-left: 2rem;
-    background-repeat: no-repeat;
-    background-position: 0.625rem 0.75rem;
-    background-size: 1rem;
-    position: relative;
-  }
-
-  > div form input[type="search"].loading {
-    background-image: none;
-  }
-
   nav {
     flex: 1;
     overflow: auto;
@@ -120,6 +107,10 @@ const Sidebar = styled.div`
     &.pending {
       color: hsl(224, 98%, 58%);
     }
+  }
+
+  @media (max-width: 767px) {
+    display: none;
   }
 `;
 

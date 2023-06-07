@@ -8,7 +8,6 @@ import { Container, Sidebar, Detail } from './Root.styles'
 export default function Root() {
   const userContext = useContext(UserContext);
   const navigate = useNavigate();
-  const firstName = userContext?.user?.name.split(' ')[0];
 
   if(!userContext?.user) {
     navigate('/');
