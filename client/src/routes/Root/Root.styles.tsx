@@ -6,7 +6,7 @@ const Container = styled.div`
 `;
 
 const Sidebar = styled.div`
-  width: 22rem;
+  width: 18rem;
   background-color: #f7f7f7;
   border-right: solid 1px #e3e3e3;
   display: flex;

@@ -1,98 +1,154 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { SignInFormBox, LogoContainer, SignUpButton, SignUpFields, HalfWidth, TwoThirdsWidth, OneThirdWidth } from './SignInForm.styles';
 import UserContext from '../../contexts/userContext';
 
+interface FormState {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  address: string;
+  phone: string;
+  dob: string;
+  firstName: string;
+  lastName: string;
+  isSigningUp: boolean;
+  shouldSubmit: boolean;
+  isRegistered: boolean;
+}
+
 const SignInForm = () => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [confirmPassword, setConfirmPassword] = React.useState('');
-  const [address, setAddress] = React.useState('');
-  const [phone, setPhone] = React.useState('');
-  const [dob, setDob] = React.useState('');
-  const [firstName, setFirstName] = React.useState('');
-  const [lastName, setLastName] = React.useState('');
-  const [isSigningUp, setIsSigningUp] = React.useState(false);
-  const [shouldSubmit, setShouldSubmit] = React.useState(false);
+  const [formState, setFormState] = useState<FormState>({
+    email: '',
+    password: '',
+    confirmPassword: '',
+    address: '',
+    phone: '',
+    dob: '',
+    firstName: '',
+    lastName: '',
+    isSigningUp: false,
+    shouldSubmit: false,
+    isRegistered: false,
+  });
   const userContext = useContext(UserContext);
   const navigate = useNavigate();
 
-  const clearFields = () => {    
-    setEmail('');
-    setPassword('');
-    setConfirmPassword('');
-    setAddress('');
-    setPhone('');
-    setDob('');
-    setFirstName('');
-    setLastName('');
-  };
+  const clearFields = useCallback(() => {
+    setFormState((prevState) => ({
+      ...prevState,
+      email: '',
+      password: '',
+      confirmPassword: '',
+      address: '',
+      phone: '',
+      dob: '',
+      firstName: '',
+      lastName: '',
+    }));
+  }, []);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback(async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    if (!shouldSubmit) {
-      return; 
+  
+    if (!formState.shouldSubmit) {
+      return;
     }
-
+  
     try {
       let response;
-      
-      if (isSigningUp) {
-        const name = `${firstName} ${lastName}`;
+  
+      if (formState.isSigningUp) {
+        const name = `${formState.firstName} ${formState.lastName}`;
         response = await axios.post('http://localhost:5000/api/users/register', {
-          email,
-          password,
+          email: formState.email,
+          password: formState.password,
           name,
           role: 'customer',
-          address,
-          phone,
-          dob,
+          address: formState.address,
+          phone: formState.phone,
+          dob: formState.dob,
         });
+  
+        if (response.status === 201) {
+          console.log('Registration successful');
+          setFormState((prevState) => ({
+            ...prevState,
+            isSigningUp: false,
+            isRegistered: true,
+          }));
+          clearFields();
+        } else {
+          console.log('Registration failed');
+        }
       } else {
         response = await axios.post('http://localhost:5000/api/users/login', {
-          email,
-          password,
+          email: formState.email,
+          password: formState.password,
         });
-      }
-
-      if (response.status === 200) {
-        localStorage.setItem('token', response.data.token);
-        userContext?.setUser(response.data.user);
-        navigate('/portal/accounts');
-      } else {
-        console.log('Login failed');
+  
+        if (response.status === 200) {
+          console.log('Login successful');
+          localStorage.setItem('token', response.data.token);
+          userContext?.setUser(response.data.user);
+          navigate('/portal/accounts');
+        } else {
+          console.log('Login failed');
+        }
       }
     } catch (error) {
       console.error('An error occurred', error);
     }
-    setShouldSubmit(false);
-  };
+  
+    setFormState((prevState) => ({
+      ...prevState,
+      shouldSubmit: false,
+    }));
+  }, [formState, navigate, userContext, clearFields]);
 
-  const handleSignUpClick = () => {
-    setIsSigningUp(!isSigningUp);
+  const handleSignUpClick = useCallback(() => {
+    setFormState((prevState) => ({
+      ...prevState,
+      isSigningUp: !prevState.isSigningUp,
+    }));
     clearFields();
-    setShouldSubmit(false);
-  };
+    setFormState((prevState) => ({
+      ...prevState,
+      shouldSubmit: false,
+    }));
+  }, [clearFields]);
+
+  const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = event.target;
+    setFormState((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  }, []);
 
   return (
     <SignInFormBox onSubmit={handleSubmit}>
       <h1>
-        {isSigningUp ? "Create" : "Sign Into"}
+        {formState.isSigningUp ? "Create" : "Sign Into"}
         <br />
         Your Account
       </h1>
       <LogoContainer>Finex</LogoContainer>
-      {!isSigningUp && (
+      {!formState.isSigningUp && (
         <>
+          {formState.isRegistered && (
+            <div style={{ color: 'green', marginBottom: '16px' }}>
+              Registration successful! Please sign in to continue.
+            </div>
+          )}
           <div>
             <label htmlFor="email">Email</label>
             <input
               type="text"
               id="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              value={formState.email}
+              onChange={handleChange}
             />
           </div>
           <div>
@@ -100,21 +156,21 @@ const SignInForm = () => {
             <input
               type="password"
               id="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              value={formState.password}
+              onChange={handleChange}
             />
           </div>
         </>
       )}
-      {isSigningUp && (
+      {formState.isSigningUp && (
         <SignUpFields>
           <HalfWidth>
             <label htmlFor="firstName">First Name</label>
             <input
               type="text"
               id="firstName"
-              value={firstName}
-              onChange={(event) => setFirstName(event.target.value)}
+              value={formState.firstName}
+              onChange={handleChange}
             />
           </HalfWidth>
           <HalfWidth>
@@ -122,8 +178,8 @@ const SignInForm = () => {
             <input
               type="text"
               id="lastName"
-              value={lastName}
-              onChange={(event) => setLastName(event.target.value)}
+              value={formState.lastName}
+              onChange={handleChange}
             />
           </HalfWidth>
           <TwoThirdsWidth>
@@ -131,8 +187,8 @@ const SignInForm = () => {
             <input
               type="text"
               id="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              value={formState.email}
+              onChange={handleChange}
             />
           </TwoThirdsWidth>
           <OneThirdWidth>
@@ -140,8 +196,8 @@ const SignInForm = () => {
             <input
               type="date"
               id="dob"
-              value={dob}
-              onChange={(event) => setDob(event.target.value)}
+              value={formState.dob}
+              onChange={handleChange}
             />
           </OneThirdWidth>
           <TwoThirdsWidth>
@@ -149,8 +205,8 @@ const SignInForm = () => {
             <input
               type="text"
               id="address"
-              value={address}
-              onChange={(event) => setAddress(event.target.value)}
+              value={formState.address}
+              onChange={handleChange}
             />
           </TwoThirdsWidth>
           <OneThirdWidth>
@@ -158,8 +214,8 @@ const SignInForm = () => {
             <input
               type="tel"
               id="phone"
-              value={phone}
-              onChange={(event) => setPhone(event.target.value)}
+              value={formState.phone}
+              onChange={handleChange}
             />
           </OneThirdWidth>
           <HalfWidth>
@@ -167,8 +223,8 @@ const SignInForm = () => {
             <input
               type="password"
               id="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              value={formState.password}
+              onChange={handleChange}
             />
           </HalfWidth>
           <HalfWidth>
@@ -176,22 +232,25 @@ const SignInForm = () => {
             <input
               type="password"
               id="confirmPassword"
-              value={confirmPassword}
-              onChange={(event) => setConfirmPassword(event.target.value)}
+              value={formState.confirmPassword}
+              onChange={handleChange}
             />
           </HalfWidth>
         </SignUpFields>
       )}
       <button
         type="submit"
-        onClick={() => setShouldSubmit(true)}
+        onClick={() => setFormState((prevState) => ({
+          ...prevState,
+          shouldSubmit: true,
+        }))}
         style={{ width: '100%', backgroundColor: 'rgb(37, 150, 190)', color: '#fff' }}
       >
-        {isSigningUp ? "Sign Up" : "Sign In"}
+        {formState.isSigningUp ? "Sign Up" : "Sign In"}
       </button>
       <div style={{ marginTop: '8px', textAlign: 'left' }}>
         <SignUpButton onClick={handleSignUpClick}>
-          {isSigningUp ? "Already have an account? Sign In." : "Not registered? Sign up."}
+          {formState.isSigningUp ? "Already have an account? Sign In." : "Not registered? Sign up."}
         </SignUpButton>
       </div>
     </SignInFormBox>

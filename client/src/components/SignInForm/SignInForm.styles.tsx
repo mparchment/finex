@@ -13,7 +13,7 @@ export const SignInFormBox = styled.form`
     display: inline-block;
     width: 100%;
     margin-top: 10px;
-    margin-bottom: 35px;
+    margin-bottom: 20px;
     font-size: 36px;
     color: #333;
   }
