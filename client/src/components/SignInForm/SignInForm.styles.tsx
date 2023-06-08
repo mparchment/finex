@@ -48,7 +48,7 @@ export const SignInFormBox = styled.form`
     padding: 18px;
     border: none;
     border-radius: 8px;
-    background-color: rgb(37, 150, 190);
+    background-color: var(--primary-color);
     color: #fff;
     font-size: 18px;
     font-weight: bold;

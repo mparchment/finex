@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Flexbox } from './Accounts.styles';
 import AccountPreview from '../../components/AccountPreview/AccountPreview';
 import AccountView from '../../components/AccountView/AccountView';
+import { Account } from '../../types';
 
 export default function Accounts() {
   const accounts = [
@@ -10,9 +11,9 @@ export default function Accounts() {
     { name: "OSI Account", type: "Checking", number: "246810121", balance: 1903.01 },
   ];
 
-  const [selectedAccount, setSelectedAccount] = useState(null);
+  const [selectedAccount, setSelectedAccount] = useState<Account | null>(null);
 
-  const handleAccountClick = (account: any) => {
+  const handleAccountClick = (account: Account) => {
     setSelectedAccount(account);
   }
 

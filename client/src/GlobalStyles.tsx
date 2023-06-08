@@ -8,7 +8,6 @@ const GlobalStyles = createGlobalStyle`
     outline: 0;
     font-size: 100%;
     vertical-align: baseline;
-    background: transparent;
   }
 
   body {
@@ -17,6 +16,29 @@ const GlobalStyles = createGlobalStyle`
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  :root {
+    --bg: #242526;
+    --bg-accent: #484a4d;
+    --bg-dark: #18191a;
+    --primary-color: #2596BE;
+    --text-color: #dadce1;
+    --nav-size: 60px;
+    --border: 1px solid #474a4d;
+    --border-radius: 8px;
+    --speed: 500ms;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    color: var(--text-color)
+    text-decoration: none;
   }
 `;
 

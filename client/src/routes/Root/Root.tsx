@@ -3,7 +3,8 @@ import { useContext } from 'react';
 import UserContext from '../../contexts/userContext';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import { Container, Sidebar, Detail } from './Root.styles'
+import { Container, Sidebar, Detail, Chatbox } from './Root.styles';
+import TopNav from '../../components/TopNav/TopNav';
 
 export default function Root() {
   const userContext = useContext(UserContext);
@@ -14,35 +15,43 @@ export default function Root() {
   }
 
   return (
-    <Container>
-      <Sidebar>
-        <h1>Finex</h1>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/portal/accounts">Accounts</Link>
-            </li>
-            <li>
-              <Link to="/portal/planning">Planning</Link>
-            </li>
-            <li>
-              <Link to="/portal/transfer">Transfer</Link>
-            </li>
-            <li>
-              <Link to="/portal/billing">Billing</Link>
-            </li>
-            <li>
-              <Link to="/portal/profile">Profile</Link>
-            </li>
-            <li>
-              <Link to="/portal/settings">Settings</Link>
-            </li>
-          </ul>
-        </nav>
-      </Sidebar>
-      <Detail>
-        <Outlet />
-      </Detail>
-    </Container>
+    <>
+      <TopNav />
+      <Container>
+        <Sidebar>
+          <h1>Finex</h1>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/portal/accounts">Accounts</Link>
+              </li>
+              <li>
+                <Link to="/portal/planning">Planning</Link>
+              </li>
+              <li>
+                <Link to="/portal/transfer">Transfer</Link>
+              </li>
+              <li>
+                <Link to="/portal/billing">Billing</Link>
+              </li>
+              <li>
+                <Link to="/portal/profile">Profile</Link>
+              </li>
+              <li>
+                <Link to="/portal/settings">Settings</Link>
+              </li>
+            </ul>
+          </nav>
+        </Sidebar>
+        <Detail>
+          <Outlet />
+        </Detail>
+        <Sidebar>
+          <Chatbox>
+            Chatbox
+          </Chatbox>
+        </Sidebar>
+      </Container>
+    </>
   );
 }

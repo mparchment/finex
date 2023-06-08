@@ -244,7 +244,7 @@ const SignInForm = () => {
           ...prevState,
           shouldSubmit: true,
         }))}
-        style={{ width: '100%', backgroundColor: 'rgb(37, 150, 190)', color: '#fff' }}
+        style={{ width: '100%', backgroundColor: 'var(--primary-color)', color: '#fff' }}
       >
         {formState.isSigningUp ? "Sign Up" : "Sign In"}
       </button>

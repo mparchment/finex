@@ -2,15 +2,17 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   display: flex;
-  height: 100vh;
+  height: calc(100vh - var(--nav-size));
+  color: var(--text-color);
 `;
 
 const Sidebar = styled.div`
   width: 18rem;
-  background-color: #f7f7f7;
-  border-right: solid 1px #e3e3e3;
+  background-color: var(--bg-dark);
   display: flex;
   flex-direction: column;
+  color: #e3e3e3;
+  font-weight: 500;
 
   > * {
     padding-left: 2rem;
@@ -25,8 +27,8 @@ const Sidebar = styled.div`
     display: flex;
     align-items: center;
     margin: 0;
+    margin-bottom: .5rem;
     padding: 1rem 2rem;
-    border-top: 1px solid #e3e3e3;
     order: 1;
     line-height: 1;
 
@@ -43,7 +45,6 @@ const Sidebar = styled.div`
     gap: 0.5rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #e3e3e3;
   }
 
   > div form {
@@ -94,9 +95,10 @@ const Sidebar = styled.div`
     color: inherit;
     text-decoration: none;
     gap: 1rem;
+    transition: background-color var(--speed) ease-out;
 
     &:hover {
-      background: #e3e3e3;
+      background: var(--bg-accent);
     }
 
     &.active {
@@ -117,6 +119,7 @@ const Sidebar = styled.div`
 const Detail = styled.div`
   flex: 1;
   padding: 2rem 4rem;
+  background-color: var(--bg-dark);
   width: 100%;
 
   &.loading {
@@ -140,4 +143,9 @@ const ErrorPage = styled.div`
   width: 100%;
 `;
 
-export { Container, Sidebar, Detail, LastChild, ErrorPage };
+const Chatbox = styled.div`
+  padding: 1rem;
+  margin-top: .25rem;
+`;
+
+export { Container, Sidebar, Detail, LastChild, ErrorPage, Chatbox };
