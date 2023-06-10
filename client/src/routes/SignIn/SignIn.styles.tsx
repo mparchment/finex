@@ -4,6 +4,7 @@ import SignInImage from '../../assets/sign-in.jpg';
 export const SignInContainer = styled.div`
   display: flex;
   height: 100vh;
+  color: black;
 `;
 
 export const LeftPanel = styled.div`

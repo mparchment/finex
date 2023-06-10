@@ -5,6 +5,7 @@ export const Navbar = styled.nav`
     background-color: var(--bg);
     padding: 0 1rem;
     border-bottom: var(--border);
+    color: white;
 `;
 
 export const NavbarNav = styled.ul`

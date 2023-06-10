@@ -89,6 +89,7 @@ export const SignUpFields = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
+  color: #000;
 
   & > div {
     box-sizing: border-box;

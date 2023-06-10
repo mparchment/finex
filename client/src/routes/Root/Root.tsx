@@ -34,12 +34,6 @@ export default function Root() {
               <li>
                 <Link to="/portal/billing">Billing</Link>
               </li>
-              <li>
-                <Link to="/portal/profile">Profile</Link>
-              </li>
-              <li>
-                <Link to="/portal/settings">Settings</Link>
-              </li>
             </ul>
           </nav>
         </Sidebar>
@@ -48,7 +42,7 @@ export default function Root() {
         </Detail>
         <Sidebar>
           <Chatbox>
-            Chatbox
+            
           </Chatbox>
         </Sidebar>
       </Container>

@@ -3,4 +3,4 @@ export interface Account {
     type: string;
     number: string;
     balance: number;
-  }
+}

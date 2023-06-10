@@ -56,31 +56,31 @@ const router = createBrowserRouter([
     },
   ]);
 
-  const App = () => {
-    const [user, setUser] = useState<IUser | null>(null);
-  
-    // Load any persisted user from localStorage when the component mounts
-    useEffect(() => {
-      const persistedUser = localStorage.getItem('user');
-      if (persistedUser) {
-        setUser(JSON.parse(persistedUser));
-      }
-    }, []);
-  
-    // Whenever the user state changes, persist it to localStorage
-    useEffect(() => {
-      if (user) {
-        localStorage.setItem('user', JSON.stringify(user));
-      } else {
-        localStorage.removeItem('user');
-      }
-    }, [user]);
-  
-    return (
-      <UserContext.Provider value={{ user, setUser }}>
-          <RouterProvider router={router} />
-      </UserContext.Provider>
-    );
-  };
-  
-  export default App;
+const App = () => {
+  const [user, setUser] = useState<IUser | null>(null);
+
+  // Load any persisted user from localStorage when the component mounts
+  useEffect(() => {
+    const persistedUser = localStorage.getItem('user');
+    if (persistedUser) {
+      setUser(JSON.parse(persistedUser));
+    }
+  }, []);
+
+  // Whenever the user state changes, persist it to localStorage
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
+  }, [user]);
+
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+        <RouterProvider router={router} />
+    </UserContext.Provider>
+  );
+};
+
+export default App;
